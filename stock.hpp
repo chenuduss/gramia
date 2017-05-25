@@ -11,6 +11,9 @@ enum stock
 };
 
 typedef double StockPrice;
+typedef double StockVolume;
+
+inline stock GetOther(stock s) {return (s == st1) ? st2 : st1;}
 
 }
 
