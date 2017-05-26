@@ -98,7 +98,7 @@ OrderArray OrderList::PullOutOrders(StockPrice price, StockPrice value)
             FloatNumber cvol = value / price;\
             if (cvol > iter->Volume)
             {
-                throw std::runtime_error("FloatNumber bug (OrderList::PullOutOrders)");
+                throw std::runtime_error("FloatNumber bug (1) (OrderList::PullOutOrders)");
             }\
 
             result.push_back(iter->Cut(cvol));
@@ -107,6 +107,12 @@ OrderArray OrderList::PullOutOrders(StockPrice price, StockPrice value)
             {
                 m_Container.erase(iter);
             }
+
+            if (result.cbegin()->GetValue() != value)
+            {
+                throw std::runtime_error("FloatNumber bug (2) (OrderList::PullOutOrders)");
+            }
+
             break;
         }
     }
