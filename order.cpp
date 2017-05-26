@@ -13,9 +13,9 @@ Order::Order(
         bool anonymous,
         TradeSessionTimeStamp expire)
     : Resourse(resource),
-      m_ID(id),
+      Id(id),
       Price(price),
-      m_Volume(volume),
+      Volume(volume),
       Created(created),
       Creator(creator),
       Anonymous(anonymous),
@@ -25,7 +25,7 @@ Order::Order(
 
 Order Order::GetEmpty()
 {
-    return Order(st1, 0);
+    return Order(stInvalid, 0);
 }
 
 

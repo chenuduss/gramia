@@ -9,7 +9,8 @@ namespace gramia
 
 enum stock
 {
-    st1 = 0,
+	stInvalid = 0,
+    st1,
     st2
 };
 

@@ -22,37 +22,27 @@ public:
         Trader::ID creator = 0,
         bool anonymous = true,
         TradeSessionTimeStamp expire = 0);
-    ~Order() {}
+    virtual ~Order() {}
 
-    operator bool() const noexcept
-    {
-        return (bool)m_ID;
-    }
-
-    ID GetID() const noexcept
-    {
-        return m_ID;
-    }
-    StockVolume GetVolume() const noexcept
-    {
-        return m_Volume;
-    }
-
-    const stock Resourse;
-    const TradeSessionTimeStamp Created;
-    const Trader::ID Creator;
-    const StockPrice Price;
-
+    ID Id;
+    stock Resourse;
+    StockVolume Volume;
+    TradeSessionTimeStamp Created;
+    Trader::ID Creator;
+    StockPrice Price;
 
     TradeSessionTimeStamp Expire;
     bool Anonymous;
 
     Order Cut(StockVolume volume);
-
     static Order GetEmpty();
-private:
-    ID m_ID;
-    StockVolume m_Volume;
+
+    bool empty() const noexcept
+    {        
+        return (bool)m_ID;
+    }    
+protected:  
+    
 };
 
 }
