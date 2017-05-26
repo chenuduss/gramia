@@ -1,5 +1,7 @@
 #include "order.hpp"
 
+#include <stdexcept>
+
 namespace gramia
 {
 
@@ -28,5 +30,16 @@ Order Order::GetEmpty()
     return Order(stInvalid, 0);
 }
 
+FloatNumber Order::GetValue() const
+{
+    return FloatNumber(Price * Volume);
+}
+
+Order Order::Cut(StockVolume volume)
+{
+    Volume -= volume;
+
+    return Order(Resourse, Id, volume, Price, Created, Creator, Anonymous, Expire);
+}
 
 }

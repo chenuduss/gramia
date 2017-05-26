@@ -1,10 +1,12 @@
 #ifndef STOCKVOLUME_HPP
 #define STOCKVOLUME_HPP
 
+#include "floatnumber.hpp"
+
 namespace gramia
 {
 
-typedef double StockVolume;
+typedef FloatNumber StockVolume;
 
 }
 

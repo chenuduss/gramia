@@ -1,5 +1,7 @@
 #include "orderlist.hpp"
 
+#include <stdexcept>
+
 namespace gramia
 {
 
@@ -25,7 +27,7 @@ OrderList::OrderContainer::const_iterator OrderList::FindOrder(Order::ID id) con
 {
     for (OrderContainer::const_iterator iter = m_Container.cbegin(); iter != m_Container.cend(); iter++)
     {
-        if (id == iter->GetID())
+        if (id == iter->Id)
         {
             return iter;
         }
@@ -72,5 +74,45 @@ OrderArray OrderList::CancelOrdersByCreator(Trader::ID tr)
 
     return result;
 }
+
+OrderArray OrderList::PullOutOrders(StockPrice price, StockPrice value)
+{
+    OrderArray result;
+
+    for (OrderContainer::iterator iter = m_Container.begin(); (iter != m_Container.end()) && (value != 0); )
+    {
+        if (price > iter->Price)
+        {
+            break;
+        }
+
+        FloatNumber val = iter->GetValue();
+
+        if (val <= value)
+        {
+            result.push_back(*iter);
+            iter = m_Container.erase(iter);
+            value -= val;
+        }   else
+        {
+            FloatNumber cvol = value / price;\
+            if (cvol > iter->Volume)
+            {
+                throw std::runtime_error("FloatNumber bug (OrderList::PullOutOrders)");
+            }\
+
+            result.push_back(iter->Cut(cvol));
+
+            if (iter->empty())
+            {
+                m_Container.erase(iter);
+            }
+            break;
+        }
+    }
+
+    return result;
+}
+
 
 }

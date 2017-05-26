@@ -24,6 +24,7 @@ public:
 
   FloatNumber operator + (const FloatNumber& v) const;
   FloatNumber operator - (const FloatNumber& v) const;
+  void operator -= (const FloatNumber& v);
 
   bool operator < (const FloatNumber& v) const
   {
@@ -50,9 +51,19 @@ public:
     return (_v == v._v);
   }
 
+  bool operator == (double v) const
+  {
+    return (*this == FloatNumber(v));
+  }
+
   bool operator != (const FloatNumber& v) const
   {
     return (_v != v._v);
+  }
+
+  bool operator != (signed v) const
+  {
+    return (*this != FloatNumber(v));
   }
 
   FloatNumber operator * (const FloatNumber& v) const
@@ -61,10 +72,11 @@ public:
     return FloatNumber(res);
   }  
 
+  FloatNumber operator / (const FloatNumber& v) const;
+
   double Get() const;
 
 private:
-  FloatNumber operator / (const FloatNumber& v) const;
 
   static FloatNumber FromRaw(unsigned long long s)
   {

@@ -22,7 +22,8 @@ public:
     bool IsExist(Order::ID id) const noexcept;
     Order CancelOrder(Order::ID id);
     OrderArray CancelOrdersByCreator(Trader::ID tr);
-    OrderArray PullOutOrders(StockPrice value);
+
+    OrderArray PullOutOrders(StockPrice price, StockPrice value);
 
     OrderArray Dump(StockPrice from, StockPrice to) const;
     double TotalVolume(StockPrice target) const;

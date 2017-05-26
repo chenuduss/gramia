@@ -34,6 +34,7 @@ public:
     TradeSessionTimeStamp Expire;    
 
     Order Cut(StockVolume volume);
+    FloatNumber GetValue() const;
     static Order GetEmpty();
 
     bool empty() const noexcept

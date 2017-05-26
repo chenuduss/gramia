@@ -63,12 +63,22 @@ FloatNumber FloatNumber::operator + (const FloatNumber& v) const
 
 FloatNumber FloatNumber::operator - (const FloatNumber& v) const
 {
-  if (v > *this)
-  {
-    throw std::invalid_argument("big value");
-  }
+    if (v > *this)
+    {
+        throw std::invalid_argument("big value");
+    }
 
   return FromRaw(_v - v._v);
+}
+
+void FloatNumber::operator -= (const FloatNumber& v)
+{
+    if (v > *this)
+    {
+      throw std::invalid_argument("big value");
+    }
+
+    _v -= v._v;
 }
 
 FloatNumber FloatNumber::operator / (const FloatNumber& v) const

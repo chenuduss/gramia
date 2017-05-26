@@ -1,10 +1,12 @@
 #ifndef STOCKPRICE_HPP
 #define STOCKPRICE_HPP
 
+#include "floatnumber.hpp"
+
 namespace gramia
 {
 
-typedef double StockPrice;
+typedef FloatNumber StockPrice;
 
 }
 
