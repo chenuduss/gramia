@@ -6,16 +6,16 @@ namespace gramia
 Order::Order(
         stock resource,
         ID id,
-        StockPrice price,
         StockVolume volume,
+        StockPrice price,        
         TradeSessionTimeStamp created,
         Trader::ID creator,
         bool anonymous,
         TradeSessionTimeStamp expire)
     : Resourse(resource),
       Id(id),
-      Price(price),
       Volume(volume),
+      Price(price),      
       Created(created),
       Creator(creator),
       Anonymous(anonymous),

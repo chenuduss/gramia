@@ -16,30 +16,29 @@ public:
     Order(
         stock resource,
         ID id,
-        StockPrice price = 0.0,
         StockVolume volume = 0.0,
+        StockPrice price = 0.0,        
         TradeSessionTimeStamp created = 0,
         Trader::ID creator = 0,
         bool anonymous = true,
         TradeSessionTimeStamp expire = 0);
     virtual ~Order() {}
-
-    ID Id;
+    
     stock Resourse;
+    ID Id;
     StockVolume Volume;
+    StockPrice Price;
     TradeSessionTimeStamp Created;
     Trader::ID Creator;
-    StockPrice Price;
-
-    TradeSessionTimeStamp Expire;
     bool Anonymous;
+    TradeSessionTimeStamp Expire;    
 
     Order Cut(StockVolume volume);
     static Order GetEmpty();
 
     bool empty() const noexcept
     {        
-        return (bool)m_ID;
+        return (Volume == 0.0);
     }    
 protected:  
     
