@@ -116,13 +116,13 @@ bool TestOrderListStr(
 
     FloatNumber t1;
 
-    FloatNumber v1 = FloatNumber(i4.c_str(), 5);
+    FloatNumber v1 = FloatNumber(i4.c_str());
 
     gramia::Order o1(gramia::st1, 45, v1, FloatNumber(6.4));
     ol.AddOrder(o1);
     t1 += v1;
 
-    v1  = FloatNumber(i5.c_str(), 5);
+    v1  = FloatNumber(i5.c_str());
 
 
     gramia::Order o2(gramia::st1, 0, v1, FloatNumber(6.5), 0, 56);
@@ -131,7 +131,7 @@ bool TestOrderListStr(
 
     FloatNumber t2 = t1;
 
-    v1  = FloatNumber(i6.c_str(), 5);
+    v1  = FloatNumber(i6.c_str());
 
 
     gramia::Order o3(gramia::st1, 0, v1, FloatNumber(6.6), 0, 56);
@@ -210,7 +210,7 @@ bool TestOrderListStr(
 std::default_random_engine gen(std::random_device{}());
 std::uniform_int_distribution<char> numbers('0', '9');
 std::uniform_int_distribution<int> sizes1(1, 3);
-std::uniform_int_distribution<int> sizes2(2, 9);
+std::uniform_int_distribution<int> sizes2(2, 5);
 
 std::string getnumbers(std::uniform_int_distribution<int>& lendistr)
 {
@@ -252,7 +252,7 @@ int main()
 
     /*FloatNumber v1("45.065237");
     FloatNumber v2("0.0005");
-    FloatNumber v3("1.098323231", 2);
+    FloatNumber v3("1.098323231");
     FloatNumber v4("1.09832327792382323232435453453453");
     std::cout << v1.Get()<< "  " << v1.asString()  << std::endl;
     std::cout << v2.Get()<< "  " << v2.asString()  << std::endl;

@@ -16,8 +16,7 @@ public:
   FloatNumber(signed s);
   FloatNumber(double s);
   FloatNumber(
-          const char* s,
-          int precision = FloatNumberPrecisionCount);
+          const char* s);
   FloatNumber();
   ~FloatNumber()
   {

@@ -55,15 +55,8 @@ FloatNumber::FloatNumber(double s)
   _v = s;
 }
 
-FloatNumber::FloatNumber(
-        const char* s,
-        int precision)
+FloatNumber::FloatNumber(const char* s)
 {
-    if (precision > FloatNumberPrecisionCount)
-    {
-        throw std::invalid_argument("Too big precision!");
-    }
-
     std::string ss = s;
     int p = ss.find_first_of('.');
     if (p != std::string::npos)
@@ -84,11 +77,6 @@ FloatNumber::FloatNumber(
             {
                 ss.erase(ss.begin() + (ss.size()-1));
             }
-        }
-
-        for (int i = 0; i < (FloatNumberPrecisionCount - precision); i++)
-        {
-            *(ss.rbegin() + i) = '0';
         }
 
         ss.erase(ss.begin()+p);
