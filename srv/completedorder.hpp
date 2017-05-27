@@ -12,6 +12,10 @@ class CompletedOrder
 public:
     CompletedOrder();
     virtual ~CompletedOrder();
+
+    Trader::ID Buyer;
+    bool BuyerAnonymous;
+    TradeSessionTimeStamp Completed;
 };
 
 }

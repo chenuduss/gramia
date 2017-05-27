@@ -4,14 +4,20 @@
 
 #include "exchangecore.hpp"
 
+
 namespace gramia
 {
+
+
 
 class ExchangeEngine
 {
 public:
     ExchangeEngine();
     ~ExchangeEngine() {}
+
+
+
 
 protected:
     ExchangeCore m_Core;

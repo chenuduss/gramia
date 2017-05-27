@@ -33,6 +33,31 @@ public:
     StockPrice RemainValue;
 };
 
+class OrderCancelResult
+{
+public:
+    OrderCancelResult()
+        : SourceOrder(stInvalid, 0)
+    {
+
+    }
+
+    ~OrderCancelResult()
+    {
+
+    }
+
+    enum ErrorCode
+    {
+        ecSuccess = 0,
+        ecAccessDenied,
+        ecNotExist,
+    };
+
+    ErrorCode Status;
+    Order SourceOrder;
+};
+
 class OrderList
 {
 public:
@@ -44,19 +69,16 @@ public:
     bool IsExist(Order::ID id) const noexcept;
 
 
-    enum OrderCancelResult
-    {
-        ocrSuccess = 0,
-        ocrAccessDenied,
-        ocrNotExist,
-    };
-
     OrderCancelResult CancelOrder(Order::ID id, Trader::ID requestor);
     OrderArray CancelOrdersByOwner(Trader::ID tr);
 
     OrderResult PullOutOrders(StockPrice price, StockPrice value);
 
-    OrderArray Dump(StockPrice from, StockPrice to) const;
+    OrderArray Dump(unsigned count) const;
+    OrderArray DumpByPrice(StockPrice from = StockPriceMin, StockPrice to = StockPriceMax) const;
+    OrderArray DumpByVolume(StockVolume volume) const;
+    OrderArray DumpByValue(StockPrice value) const;
+
     StockPrice TotalVolume(StockPrice target) const;
     StockPrice TotalValue(StockPrice target) const;
 

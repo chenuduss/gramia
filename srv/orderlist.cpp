@@ -68,26 +68,32 @@ bool OrderList::IsExist(Order::ID id) const noexcept
     return (FindOrder(id) != m_Container.cend());
 }
 
-OrderList::OrderCancelResult OrderList::CancelOrder(Order::ID id, Trader::ID requestor)
+OrderCancelResult OrderList::CancelOrder(Order::ID id, Trader::ID requestor)
 {
+    OrderCancelResult result;
+
     OrderContainer::const_iterator iter = FindOrder(id);
     if (iter  == m_Container.cend())
     {
-        return ocrNotExist;
+        result.Status = OrderCancelResult::ecNotExist;
+        return result;
     }
 
     if (requestor)
     {
         if (requestor != iter->Owner)
         {
-            return ocrAccessDenied;
+            result.Status =  OrderCancelResult::ecAccessDenied;
+            return result;
         }
     }
 
+    result.SourceOrder = *iter;
+
     m_Container.erase(iter);
 
-    return ocrSuccess;
-
+    result.Status = OrderCancelResult::ecSuccess;
+    return result;
 }
 
 OrderArray OrderList::CancelOrdersByOwner(Trader::ID tr)
