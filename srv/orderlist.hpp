@@ -2,7 +2,7 @@
 #define ORDERLIST_HPP
 
 #include "order.hpp"
-#include "orderarray.hpp"
+#include "baseorderarray.hpp"
 
 #include <list>
 #include <vector>
@@ -15,6 +15,8 @@ const StockPrice StockPriceMax(100000);
 
 const StockVolume StockVolumeMin(0.00001);
 const StockVolume StockVolumeMax(100000);
+
+typedef BaseOrderArray<Order> OrderArray;
 
 class OrderResult
 {
