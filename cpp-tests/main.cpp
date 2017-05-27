@@ -87,14 +87,14 @@ bool TestOrderList(
         return false;
     }
 
-    ol.CancelOrder(45);
+    ol.CancelOrder(45, 0);
 
     if (ol.Count() != 2)
     {
         return false;
     }
 
-    ol.CancelOrdersByCreator(56);
+    ol.CancelOrdersByOwner(56);
 
     if (ol.Count())
     {
@@ -187,7 +187,7 @@ bool TestOrderListStr(
         return false;
     }
 
-    ol.CancelOrder(45);
+    ol.CancelOrder(45, 0);
 
     if (ol.Count() != 2)
     {
@@ -195,7 +195,7 @@ bool TestOrderListStr(
         return false;
     }
 
-    ol.CancelOrdersByCreator(56);
+    ol.CancelOrdersByOwner(56);
 
     if (ol.Count())
     {

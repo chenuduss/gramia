@@ -13,7 +13,7 @@ Order::Order(
         StockVolume volume,
         StockPrice price,        
         TradeSessionTimeStamp created,
-        Trader::ID creator,
+        Trader::ID owner,
         bool anonymous,
         TradeSessionTimeStamp expire)
     : Resourse(resource),
@@ -21,7 +21,7 @@ Order::Order(
       Volume(volume),
       Price(price),      
       Created(created),
-      Creator(creator),
+      Owner(owner),
       Anonymous(anonymous),
       Expire(expire)
 {
@@ -41,7 +41,7 @@ Order Order::Cut(StockVolume volume)
 {
     Volume -= volume;
 
-    return Order(Resourse, Id, volume, Price, Created, Creator, Anonymous, Expire);
+    return Order(Resourse, Id, volume, Price, Created, Owner, Anonymous, Expire);
 }
 
 }

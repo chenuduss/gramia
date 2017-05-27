@@ -42,8 +42,17 @@ public:
     void AddOrder(const Order& o);
 
     bool IsExist(Order::ID id) const noexcept;
-    Order CancelOrder(Order::ID id);
-    OrderArray CancelOrdersByCreator(Trader::ID tr);
+
+
+    enum OrderCancelResult
+    {
+        ocrSuccess = 0,
+        ocrAccessDenied,
+        ocrNotExist,
+    };
+
+    OrderCancelResult CancelOrder(Order::ID id, Trader::ID requestor);
+    OrderArray CancelOrdersByOwner(Trader::ID tr);
 
     OrderResult PullOutOrders(StockPrice price, StockPrice value);
 

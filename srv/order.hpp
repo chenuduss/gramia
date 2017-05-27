@@ -19,7 +19,7 @@ public:
         StockVolume volume = 0.0,
         StockPrice price = 0.0,        
         TradeSessionTimeStamp created = 0,
-        Trader::ID creator = 0,
+        Trader::ID owner = 0,
         bool anonymous = true,
         TradeSessionTimeStamp expire = 0);
     virtual ~Order() {}
@@ -29,7 +29,7 @@ public:
     StockVolume Volume;
     StockPrice Price;
     TradeSessionTimeStamp Created;
-    Trader::ID Creator;
+    Trader::ID Owner;
     bool Anonymous;
     TradeSessionTimeStamp Expire;    
 
