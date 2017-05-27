@@ -2,6 +2,13 @@
 
 #include <stdexcept>
 
+//#include <iostream>
+
+#include <cmath>
+#include <cstdlib>
+
+const FloatNumber FloatNumberOne(1.0);
+
 FloatNumber::FloatNumber()
   : _v(0)
 {
@@ -11,7 +18,7 @@ FloatNumber::FloatNumber()
 FloatNumber::FloatNumber(unsigned s)
 {
   double x = s;
-  _v = x * Precision;
+  _v = x * FloatNumberPrecision;
 }
 
 FloatNumber::FloatNumber(signed s)
@@ -23,7 +30,7 @@ FloatNumber::FloatNumber(signed s)
 
   double x = s;
 
-  _v = x * Precision;
+  _v = x * FloatNumberPrecision;
 }
 
 FloatNumber::FloatNumber(double s)
@@ -33,7 +40,7 @@ FloatNumber::FloatNumber(double s)
     throw std::range_error("less than zero");
   }
 
-  if (s < 1/Precision)
+  if (s < 1/FloatNumberPrecision)
   {
     throw std::range_error("too low precision");
   }
@@ -43,15 +50,58 @@ FloatNumber::FloatNumber(double s)
     throw std::range_error("too large number");
   }
 
-  s = s * Precision;
+  s = s * FloatNumberPrecision;
 
   _v = s;
+}
+
+FloatNumber::FloatNumber(
+        const char* s,
+        int precision)
+{
+    if (precision > FloatNumberPrecisionCount)
+    {
+        throw std::invalid_argument("Too big precision!");
+    }
+
+    std::string ss = s;
+    int p = ss.find_first_of('.');
+    if (p != std::string::npos)
+    {
+        int ca = FloatNumberPrecisionCount - (ss.size() - p - 1);
+        if (ca > 0)
+        {
+            for (int i =0;i < ca; i++)
+            {
+                ss += "0";
+            }
+        }
+
+        if (ca < 0)
+        {
+            ca = -ca;
+            for (int i =0;i < ca; i++)
+            {
+                ss.erase(ss.begin() + (ss.size()-1));
+            }
+        }
+
+        for (int i = 0; i < (FloatNumberPrecisionCount - precision); i++)
+        {
+            *(ss.rbegin() + i) = '0';
+        }
+
+        ss.erase(ss.begin()+p);
+    }
+
+
+    _v = std::strtoull(ss.c_str(), nullptr, 10);
 }
 
 double FloatNumber::Get() const
 {
   double v = _v;
-  v = v/Precision;
+  v = v/FloatNumberPrecision;
   return v;
 }
 
@@ -65,7 +115,7 @@ FloatNumber FloatNumber::operator - (const FloatNumber& v) const
 {
     if (v > *this)
     {
-        throw std::invalid_argument("big value");
+        throw std::invalid_argument("big value 1");
     }
 
   return FromRaw(_v - v._v);
@@ -75,10 +125,15 @@ void FloatNumber::operator -= (const FloatNumber& v)
 {
     if (v > *this)
     {
-      throw std::invalid_argument("big value");
+      throw std::invalid_argument("big value 2");
     }
 
     _v -= v._v;
+}
+
+void FloatNumber::operator += (const FloatNumber& v)
+{
+    _v += v._v;
 }
 
 FloatNumber FloatNumber::operator / (const FloatNumber& v) const
@@ -90,4 +145,39 @@ FloatNumber FloatNumber::operator / (const FloatNumber& v) const
 
   double res = Get()/v.Get();
   return FloatNumber(res);
+}
+
+FloatNumber FloatNumber::GetInverted() const
+{
+    if (!*this)
+    {
+        return *this;
+    }
+
+    return FloatNumber(FloatNumberOne/(*this));
+}
+
+std::string FloatNumber::asString() const
+{
+    std::string result = std::to_string(_v);
+
+    for (;result.size() < FloatNumberPrecisionCount+1;)
+    {
+        result = "0" + result;
+    }
+
+    int delimiterpos = result.size()-FloatNumberPrecisionCount;
+
+    result.insert(delimiterpos, ".");
+
+    return result;
+}
+
+void FloatNumber::ResetLastDigits(int c)
+{
+    double v = _v;
+    for (int i = 0; i < c; i++) v = v/10;
+    v = std::trunc(v);
+    for (int i = 0; i < c; i++) v = v*10;
+    _v = v;
 }

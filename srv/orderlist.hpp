@@ -2,6 +2,7 @@
 #define ORDERLIST_HPP
 
 #include "order.hpp"
+#include "orderarray.hpp"
 
 #include <list>
 #include <vector>
@@ -9,7 +10,26 @@
 namespace gramia
 {
 
-typedef std::vector<Order> OrderArray;
+const StockPrice StockPriceMin(0.00001);
+const StockPrice StockPriceMax(100000);
+
+const StockVolume StockVolumeMin(0.00001);
+const StockVolume StockVolumeMax(100000);
+
+class OrderResult
+{
+public:
+    OrderResult()
+        : Completed(false)
+    {
+
+    }
+    ~OrderResult() {}
+
+    bool Completed;
+    OrderArray Orders;
+    StockPrice RemainValue;
+};
 
 class OrderList
 {
@@ -23,11 +43,17 @@ public:
     Order CancelOrder(Order::ID id);
     OrderArray CancelOrdersByCreator(Trader::ID tr);
 
-    OrderArray PullOutOrders(StockPrice price, StockPrice value);
+    OrderResult PullOutOrders(StockPrice price, StockPrice value);
 
     OrderArray Dump(StockPrice from, StockPrice to) const;
-    double TotalVolume(StockPrice target) const;
-    double CalcCost(StockPrice target) const;
+    StockPrice TotalVolume(StockPrice target) const;
+    StockPrice TotalValue(StockPrice target) const;
+
+    unsigned Count() const
+    {
+        m_Container.size();
+    }
+
 protected:
     typedef std::list<Order> OrderContainer;
     OrderContainer m_Container;

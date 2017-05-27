@@ -3,7 +3,10 @@
 
 const unsigned FloatNumberMin = 0;
 const unsigned long long FloatNumberMax = 4294967296;
-const unsigned Precision = 100000000;
+const unsigned FloatNumberPrecisionCount = 9;
+const unsigned FloatNumberPrecision = 1000000000;
+
+#include <string>
 
 class FloatNumber
 {
@@ -12,6 +15,9 @@ public:
   FloatNumber(unsigned s);
   FloatNumber(signed s);
   FloatNumber(double s);
+  FloatNumber(
+          const char* s,
+          int precision = FloatNumberPrecisionCount);
   FloatNumber();
   ~FloatNumber()
   {
@@ -25,6 +31,7 @@ public:
   FloatNumber operator + (const FloatNumber& v) const;
   FloatNumber operator - (const FloatNumber& v) const;
   void operator -= (const FloatNumber& v);
+  void operator += (const FloatNumber& v);
 
   bool operator < (const FloatNumber& v) const
   {
@@ -40,6 +47,12 @@ public:
 
     return (_v < s);
   }
+
+  bool operator <= (const FloatNumber& v) const
+  {
+    return (*this < v) || (*this == v);
+  }
+
 
   bool operator > (const FloatNumber& v) const
   {
@@ -73,9 +86,20 @@ public:
   }  
 
   FloatNumber operator / (const FloatNumber& v) const;
+  FloatNumber operator / (unsigned v) const
+  {
+    return operator /(FloatNumber(v));
+  }
 
   double Get() const;
 
+  FloatNumber GetInverted() const;
+
+
+  void ResetLastDigits(int c = 1);
+
+
+  std::string asString() const;
 private:
 
   static FloatNumber FromRaw(unsigned long long s)
@@ -85,4 +109,5 @@ private:
     return result;
   }
 };
+
 #endif // FLOATNUMBER_HPP

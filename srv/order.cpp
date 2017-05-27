@@ -2,6 +2,8 @@
 
 #include <stdexcept>
 
+#include <iostream>
+
 namespace gramia
 {
 
