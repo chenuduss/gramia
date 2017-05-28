@@ -10,7 +10,11 @@ class CompletedOrder
         : public Order
 {
 public:
-    CompletedOrder();
+    CompletedOrder(
+            const Order& source,
+            Trader::ID buyer = 0,
+            bool anonymous = true,
+            TradeSessionTimeStamp timestamp = 0);
     virtual ~CompletedOrder();
 
     Trader::ID Buyer;

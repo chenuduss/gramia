@@ -3,6 +3,8 @@
 
 #include "../srv/orderlist.hpp"
 
+#include "../srv/exchangecore.hpp"
+
 #include <random>
 
 FloatNumber failmaxpart = 10000;
@@ -244,6 +246,53 @@ std::string getnumber()
     return result;
 }
 
+
+
+bool TestExchangeCore()
+{\
+    gramia::ExchangeCore ec;
+
+    gramia::BuyResult br1 = ec.Buy(1, true, gramia::st1, FloatNumber(2), FloatNumber(10));
+
+    if (br1.Orders.size())
+    {
+        return false;
+    }
+
+    if (br1.CreatedOrder == 0)
+    {
+        return false;
+    }
+
+    if (ec.Dump(15).size() != 1)
+    {
+        return false;
+    }
+
+    gramia::BuyResult br2 = ec.Buy(2, true, gramia::st2, FloatNumber("0.5"), FloatNumber(5));
+
+    if (br2.Orders.size() != 1)
+    {
+        std::cout <<  "orders  " << br2.Orders.size() << std::endl;
+        return false;
+    }
+
+    if (br2.CreatedOrder != 0)
+    {
+        std::cout <<  "br2.CreatedOrder  " << std::endl;
+        return false;
+    }
+
+    if (ec.Dump(15).size() != 0)
+    {
+        std::cout <<  "ec.Dump(15).size() != 0" << std::endl;
+        return false;
+    }
+
+    return true;
+}
+
+
 int main()
 {
     std::cout.unsetf ( std::ios::floatfield );
@@ -257,8 +306,17 @@ int main()
     std::cout << v1.Get()<< "  " << v1.asString()  << std::endl;
     std::cout << v2.Get()<< "  " << v2.asString()  << std::endl;
     std::cout << v3.Get()<< "  " << v3.asString()  << std::endl;
-    std::cout << v4.Get()<< "  " << v4.asString()  << std::endl;
-    return 0;*/
+    std::cout << v4.Get()<< "  " << v4.asString()  << std::endl;*/
+
+   if  (!TestExchangeCore())
+   {
+        std::cout << "FAIL !" << std::endl;
+   }    else
+   {
+       std::cout << "norm !" << std::endl;
+   }
+
+    return 0;
 
 
 
@@ -301,7 +359,7 @@ int main()
         }
     }
 
-    std::cout << "TESTS STR: " << success<< " / " <<  total << std::endl;
+    std::cout << "TESTS STR: " << success<< " / " <<  total << std::endl;    
 
 
     return 0;

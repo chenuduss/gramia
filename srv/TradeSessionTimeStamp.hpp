@@ -3,7 +3,7 @@
 
 namespace gramia
 {
-typedef unsigned TradeSessionTimeStamp;
+typedef unsigned long long TradeSessionTimeStamp;
 }
 
 #endif // TRADESESSIONTIMESTAMP_H

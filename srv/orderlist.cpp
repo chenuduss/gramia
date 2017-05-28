@@ -3,7 +3,7 @@
 #include <stdexcept>
 
 
-//#include <iostream>
+#include <iostream>
 
 namespace gramia
 {
@@ -119,7 +119,7 @@ OrderResult OrderList::PullOutOrders(StockPrice price, StockPrice value)
 {
     OrderResult result;
 
-    //std::cout << "PullOutOrders :: " << price.Get() << " , " << value.Get() << std::endl;
+    std::cout << "PullOutOrders :: " << price.Get() << " , " << value.Get() << std::endl;
 
     for (OrderContainer::iterator iter = m_Container.begin(); (iter != m_Container.end()) && (value != 0); )
     {
@@ -130,7 +130,7 @@ OrderResult OrderList::PullOutOrders(StockPrice price, StockPrice value)
 
         FloatNumber val = iter->GetValue();
 
-        //std::cout << "PullOutOrders :: " << iter->Price.Get() << " , " << iter->Volume.Get() << " , " << val.Get() << std::endl;
+        std::cout << "PullOutOrders :: " << iter->Price.Get() << " , " << iter->Volume.Get() << " , " << val.Get() << std::endl;
 
 
 
@@ -211,5 +211,17 @@ StockPrice OrderList::TotalValue(StockPrice target) const
     return result;
 }
 
+
+OrderArray OrderList::Dump(unsigned count) const
+{
+    OrderArray result;
+
+    for (OrderContainer::const_iterator iter = m_Container.cbegin(); (result.size() < count) && (iter != m_Container.cend()); iter++)
+    {
+        result.push_back(*iter);
+    }
+
+    return result;
+}
 
 }
